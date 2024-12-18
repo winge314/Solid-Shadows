@@ -1,6 +1,6 @@
 public class PolygonBuilder {
     private final double phi = (1 + Math.sqrt(5)) / 2, invPhi = 1 / phi;
-    public Line[] constructCube() {
+    public Line[] newCube() {
         Line[] shape = new Line[12];
         
         double[] p1 = new double[] {1, 1, 6};
@@ -29,7 +29,7 @@ public class PolygonBuilder {
 
         return shape;
     }
-    public Line[] constructTetrahedron() {
+    public Line[] newTetrahedron() {
         Line[] shape = new Line[6];
         
         double[] p1 = new double[] {1.5, 0, 5 + 1.5 / Math.sqrt(2)};
@@ -46,7 +46,7 @@ public class PolygonBuilder {
 
         return shape;
     }
-    public Line[] constructOctahedron() {
+    public Line[] newOctahedron() {
         Line[] shape = new Line[12];
         
         double[] p1 = new double[] {0, 0, 6.75};
@@ -73,7 +73,7 @@ public class PolygonBuilder {
 
         return shape;
     }
-    public Line[] constructDodecahedron() {
+    public Line[] newDodecahedron() {
         Line[] shape = new Line[30];
 
         double[] p1 = new double[] {invPhi, 0, phi + 5};
@@ -144,7 +144,7 @@ public class PolygonBuilder {
 
         return shape;
     }
-    public Line[] constructIcosahedron() {
+    public Line[] newIcosahedron() {
         Line[] shape = new Line[30];
 
         double[] p1 = new double[] {0, 1, phi + 5};
