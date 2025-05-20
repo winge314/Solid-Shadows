@@ -4,8 +4,8 @@ import javax.swing.*;
 
 public class Screen extends JPanel implements KeyListener {
     private final double[] rotationCentre = new double[] {0, 0, 5}/*, cameraPos = new double[] {0, 0, 0}*/;
-    private final int[] screenDimensions = new int[] {1440, 850};
-    private final double slowMulti = 0.05;
+    private final int[] screenDimensions = new int[] {1440, 850}, mousePos = new int[] {0, 0};
+    private final double slowMulti = 0.25;
     private final double maxDist = 7, brightnessScaling = 2.5; // lower scaling = faster brightness dropoff
     private boolean[] keys = new boolean[7]; // shift, W, S, A, D, Q, E, can be extended to more keys later
     private Line[][] shapes = new Line[5][];
@@ -26,7 +26,7 @@ public class Screen extends JPanel implements KeyListener {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, screenDimensions[0], screenDimensions[1]);
-        double multi = keys[0] ? slowMulti : 1;
+        double multi = keys[0] ? slowMulti : 0.5;
         if (keys[1]) {
             rotateAll(-2 * multi * Math.PI / 180, 0, 0);
         }
@@ -133,46 +133,31 @@ public class Screen extends JPanel implements KeyListener {
         );
     }
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_W) { // switch case was bugging out earlier
-            keys[1] = true;
-        } else if (e.getKeyCode() == KeyEvent.VK_S) {
-            keys[2] = true;
-        } else if (e.getKeyCode() == KeyEvent.VK_A) {
-            keys[3] = true;
-        } else if (e.getKeyCode() == KeyEvent.VK_D) {
-            keys[4] = true;
-        } else if (e.getKeyCode() == KeyEvent.VK_Q) {
-            keys[5] = true;
-        } else if (e.getKeyCode() == KeyEvent.VK_E) {
-            keys[6] = true;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
-            keys[0] = true;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            currentShape = (currentShape + 1) % shapes.length;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            currentShape = (currentShape + shapes.length - 1) % shapes.length;
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_SHIFT ->   keys[0] = true;
+            case KeyEvent.VK_W ->       keys[1] = true;
+            case KeyEvent.VK_S ->       keys[2] = true;
+            case KeyEvent.VK_A ->       keys[3] = true;
+            case KeyEvent.VK_D ->       keys[4] = true;
+            case KeyEvent.VK_Q ->       keys[5] = true;
+            case KeyEvent.VK_E ->       keys[6] = true;
+            case KeyEvent.VK_RIGHT ->   currentShape = (currentShape + 1) % shapes.length;
+            case KeyEvent.VK_LEFT ->    currentShape = (currentShape + shapes.length - 1) % shapes.length;
+            case KeyEvent.VK_ESCAPE ->  System.exit(0);
+            default -> {}
         }
         repaint();
     }
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_W) {
-            keys[1] = false;
-        } else if (e.getKeyCode() == KeyEvent.VK_S) {
-            keys[2] = false;
-        } else if (e.getKeyCode() == KeyEvent.VK_A) {
-            keys[3] = false;
-        } else if (e.getKeyCode() == KeyEvent.VK_D) {
-            keys[4] = false;
-        } else if (e.getKeyCode() == KeyEvent.VK_Q) {
-            keys[5] = false;
-        } else if (e.getKeyCode() == KeyEvent.VK_E) {
-            keys[6] = false;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
-            keys[0] = false;
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_SHIFT ->   keys[0] = false;
+            case KeyEvent.VK_W ->       keys[1] = false;
+            case KeyEvent.VK_S ->       keys[2] = false;
+            case KeyEvent.VK_A ->       keys[3] = false;
+            case KeyEvent.VK_D ->       keys[4] = false;
+            case KeyEvent.VK_Q ->       keys[5] = false;
+            case KeyEvent.VK_E ->       keys[6] = false;
+            default -> {}
         }
         repaint();
     }
@@ -182,7 +167,7 @@ public class Screen extends JPanel implements KeyListener {
             repaint();
             try {
                 Thread.sleep(1000/60);
-            } catch(Exception e) {}
+            } catch (Exception e) {}
         }
     }
     private void sort() {
@@ -219,13 +204,11 @@ public class Screen extends JPanel implements KeyListener {
         }
         while (i < left.length) {
             shape[k] = left[i];
-            i++;
-            k++;
+            i++; k++;
         }
         while (j < right.length) {
             shape[k] = right[j];
-            j++;
-            k++;
+            j++; k++;
         }
     }
 }
