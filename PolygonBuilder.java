@@ -1,5 +1,22 @@
 public class PolygonBuilder {
     private final double phi = (1 + Math.sqrt(5)) / 2, invPhi = 1 / phi;
+    public Line[] newTetrahedron() {
+        Line[] shape = new Line[6];
+        
+        double[] p1 = new double[] {1.5, 1.5 / Math.sqrt(2), 5};
+        double[] p2 = new double[] {-1.5, 1.5 / Math.sqrt(2), 5};
+        double[] p3 = new double[] {0, -1.5 / Math.sqrt(2), 6.5};
+        double[] p4 = new double[] {0, -1.5 / Math.sqrt(2), 3.5};
+        
+        shape[0] = new Line(p1, p2);
+        shape[1] = new Line(p1, p3);
+        shape[2] = new Line(p1, p4);
+        shape[3] = new Line(p2, p3);
+        shape[4] = new Line(p2, p4);
+        shape[5] = new Line(p3, p4);
+
+        return shape;
+    }
     public Line[] newCube() {
         Line[] shape = new Line[12];
         
@@ -26,23 +43,6 @@ public class PolygonBuilder {
         shape[9] = new Line(p6, p7);
         shape[10] = new Line(p7, p8);
         shape[11] = new Line(p8, p5);
-
-        return shape;
-    }
-    public Line[] newTetrahedron() {
-        Line[] shape = new Line[6];
-        
-        double[] p1 = new double[] {1.5, 0, 5 + 1.5 / Math.sqrt(2)};
-        double[] p2 = new double[] {-1.5, 0, 5 + 1.5 / Math.sqrt(2)};
-        double[] p3 = new double[] {0, 1.5, 5 - 1.5 / Math.sqrt(2)};
-        double[] p4 = new double[] {0, -1.5, 5 - 1.5 / Math.sqrt(2)};
-        
-        shape[0] = new Line(p1, p2);
-        shape[1] = new Line(p1, p3);
-        shape[2] = new Line(p1, p4);
-        shape[3] = new Line(p2, p3);
-        shape[4] = new Line(p2, p4);
-        shape[5] = new Line(p3, p4);
 
         return shape;
     }

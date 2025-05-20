@@ -16,8 +16,8 @@ public class Screen extends JPanel implements KeyListener {
         addKeyListener(this);
         setFocusable(true);
         p = new Projection(90.0, 1000.0, 0.1, screenDimensions[0] / 2, screenDimensions[1]);
-        shapes[0] = pb.newCube();
-        shapes[1] = pb.newTetrahedron();
+        shapes[0] = pb.newTetrahedron();
+        shapes[1] = pb.newCube();
         shapes[2] = pb.newOctahedron();
         shapes[3] = pb.newDodecahedron();
         shapes[4] = pb.newIcosahedron();
